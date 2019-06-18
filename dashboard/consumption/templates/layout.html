@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Analysis App</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css"
+      href="{% static 'css/style.css' %}">
+  </head>
+  <body>
+
+    <div class="header">
+      <h1 id="banner">
+        <a class="white" href="{% url 'layout' %}"
+        style="text-decoration: none">
+        Analysis App
+        </a>
+      </h1>
+
+      {% block header %}
+      {% endblock %}
+    </div>
+
+    <div class="container">
+
+      <div id="side_bar">
+        <p class="side_links">
+          <a class="white" href="{% url 'summary' %}"
+             style="text-decoration: none">
+           Summary
+          </a>
+        </p>
+        <p class="side_links">
+          <a class="white" href="{% url 'details' %}"
+             style="text-decoration: none">
+           Details
+          </a>
+        </p>
+      </div>
+      {% block content %}
+      <div id="welcome">
+      <h1>
+        Welcome to Data Analysis App.
+        </br>
+        Please click a button on left side!
+      </h1>
+      </div>
+      {% endblock %}
+    </div>
+    {% block script %}
+    {% endblock %}
+  </body>
+
+</html>

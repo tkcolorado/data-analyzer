@@ -1,0 +1,321 @@
+{% extends 'home.html' %}
+{% block content %}
+
+<!-- table/ここのレイアウトを後で整える. -->
+<div class="subcontainer">
+    <div class="subheader">
+      <h2>Tables</h2>
+    </div>
+  
+    <div class="results">
+      {% block table %}
+      {% for table in tables %}
+          {{table|safe}}
+      {% endfor %}
+      {% endblock %}
+    </div>
+</div>
+
+<div class="subcontainer" id="graphs">
+  <div class="subheader">
+    <h2>Graphs</h2>
+  </div>
+
+  <div class="results">
+      {% block graph %}
+    <canvas id="radar-chart" height="200px"></canvas>
+    <canvas id="radar-chart2" height="200px"></canvas>
+    <canvas id="radar-chart3" height="200px"></canvas>
+      {% endblock %}
+  </div>
+</div>
+
+{% endblock %}
+{% block script %}
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+{% load staticfiles %} 
+<!-- ここのjsfileでなんとかする説 -->
+<script type="text/javascript">
+var areadata = "{{ areadata }}";
+var areadatalist = []
+for(key in areadata){
+    areadatalist.push(areadata[key].Average_consumption);}
+
+var areajson = JSON.stringify(areadata)
+areajson = JSON.parse(areajson);
+areajson = JSON.parse(areajson.replace(/&quot;/g,'"'));
+
+var areaitems = [];
+for(key in areajson){
+    areaitems.push(areajson[key].Average_consumption);
+}
+// console.log(areaitems)
+
+// tariffdataの変換
+var tariffdata = "{{ tariffdata }}";
+var tariffdatalist = []
+for(key in tariffdata){
+    tariffdatalist.push(tariffdata[key].Average_consumption);}
+
+var tariffjson = JSON.stringify(tariffdata)
+tariffjson = JSON.parse(tariffjson);
+tariffjson = JSON.parse(tariffjson.replace(/&quot;/g,'"'));
+
+var tariffitems = [];
+for(key in tariffjson){
+    tariffitems.push(tariffjson[key].Average_consumption);
+}
+// console.log(tariffitems)
+
+var data = "{{ data }}";
+var datalist = []
+for(key in data){
+    datalist.push(data[key].id);}
+
+// var json = JSON.stringify(datalist)
+var json = JSON.stringify(data)
+json = JSON.parse(json);
+// console.log(json)
+json = JSON.parse(json.replace(/&quot;/g,'"'));
+// console.log(json)
+
+// idのみ抽出
+var items = [];
+for(key in json){
+    items.push(json[key].id);
+}
+console.log(items)
+
+// avgのみ抽出
+var avgitems = [];
+for (key in json){
+    avgitems.push(json[key].average_consumption);
+}
+// console.log(avgitems)
+
+// avg(tariff)抽出
+var avgtariffitems = [];
+for (key in json){
+    avgtariffitems.push(json[key].average_consumption2);
+}
+// console.log(avgtariffitems)
+
+//monthdataの変換
+var monthdata = "{{ monthdata }}";
+var monthdatalist = []
+for(key in monthdata){
+    monthdatalist.push(monthdata[key].Average_consumption);
+    }
+
+var monthjson = JSON.stringify(monthdata)
+monthjson = JSON.parse(monthjson);
+monthjson = JSON.parse(monthjson.replace(/&quot;/g,'"'));
+
+var monthitems = [];
+for(key in monthjson){
+    monthitems.push(monthjson[key].Average_consumption);
+}
+console.log(monthitems)
+
+//keyを絞る（date）
+var monthdatakey = [];
+
+for (key in monthjson){
+    monthdatakey.push(monthjson[key].Month);
+}
+console.log(monthdatakey)
+  
+// totalのみ抽出
+var totalitems = [];
+
+for (key in json){
+    totalitems.push(json[key].total_consumption);
+}
+  
+//   console.log(totalitems) 
+  // jsonの抽出
+//   console.log(json.id)
+//   console.log(json)
+  
+ans = []
+fx = json.forEach(elm => {
+    Object.keys(elm).forEach(key => {
+    // console.log(`key: ${key} value: ${elm[key]}`)
+    ans.push(`${elm[key]}`)
+})
+})
+//   console.log(ans)  
+// console.log(hashValues)
+//   console.log(json.count)
+//   console.log(json.id)
+//   console.log(json[0].id)
+//   console.log(json[2].id)
+//   console.log(json)
+//   console.log(json.count)
+//   console.log(datalist)
+//   console.log(Object.values(json));
+//   console.log(data.id)
+//   console.log(key.datalist)
+//   console.log(datalist[0])
+// console.log(items);
+</script>
+  
+  <script type="text/javascript">
+      var ctx = document.getElementById("radar-chart");
+      
+      var myLineChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+              labels: monthdatakey,
+              datasets: [
+                  {   label: "average_consumption",
+                      data: monthitems,
+                      backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                      borderColor: 'rgba(255, 99, 132, 0.9)',
+                      pointBackgroundColor: 'rgba(255, 99, 132, 0.9)',
+                      pointBorderColor: 'rgba(255, 99, 132, 1)',
+                      borderWidth: 3,
+                      pointRadius: 3,
+                      fill: false,
+                  }
+              ]},
+              options: {
+              title: {
+              display: true,
+              text: 'Average consumption by month',
+              fontSize: 24
+              },
+              scales: {                          // 軸設定
+                  xAxes: [                           // Ｘ軸設定
+                      {
+                          scaleLabel: {                 // 軸ラベル
+                              display: true,                // 表示設定
+                              labelString: 'month',    // ラベル
+                              fontColor: "blue",             // 文字の色
+                              fontSize: 20                 // フォントサイズ
+                          },
+                          time: {
+                            unit: 'month',
+                            displayFormats: {
+                                month: 'MMM YYYY'
+                        },}
+                      }],
+                      yAxes: [                           // Ｘ軸設定
+                      {
+                          scaleLabel: {                 // 軸ラベル
+                              display: true,                // 表示設定
+                              labelString: 'average consumption',    // ラベル
+                              fontColor: "blue",             // 文字の色
+                              fontSize: 20                 // フォントサイズ
+                          },
+                          ticks: {
+                              min: 0
+                          },
+                      }], 
+                  }
+              }
+      });
+  
+      var ctx2 = document.getElementById("radar-chart2");
+      
+      var myLineChart2 = new Chart(ctx2, {
+          type: 'bar',
+          data: {
+              labels: ["a1", "a2"],
+              datasets: [
+                  {   label: "area_consumption",
+                      data: areaitems,
+                      backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                      borderColor: 'rgba(255, 99, 132, 0.9)',
+                      pointBackgroundColor: 'rgba(255, 99, 132, 0.9)',
+                      pointBorderColor: 'rgba(255, 99, 132, 1)',
+                      borderWidth: 3,
+                      pointRadius: 3,
+                  }
+              ]},
+              options: {
+              title: {
+                  display: true,
+                  text: 'Average consumption by area',
+                  fontSize: 24
+              },
+              scales: {                          // 軸設定
+                  xAxes: [                           // Ｘ軸設定
+                      {
+                          scaleLabel: {                 // 軸ラベル
+                              display: true,                // 表示設定
+                              labelString: 'area',    // ラベル
+                              fontColor: "blue",             // 文字の色
+                              fontSize: 20                 // フォントサイズ
+                          },
+                      }],
+                      yAxes: [                           // Ｘ軸設定
+                      {
+                          scaleLabel: {                 // 軸ラベル
+                              display: true,                // 表示設定
+                              labelString: 'average consumption',    // ラベル
+                              fontColor: "blue",             // 文字の色
+                              fontSize: 20                  // フォントサイズ
+                          },
+                          ticks: {
+                              min: 0
+                          },
+                      }], 
+                  }
+              }
+      });
+  
+      var ctx3 = document.getElementById("radar-chart3");
+      
+      var myLineChart3 = new Chart(ctx3, {
+          type: 'bar',
+          data: {
+              labels: ["t1", "t2", "t3"],
+              datasets: [
+                  {   label: "tariff_consumption",
+                      data: tariffitems,
+                      backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                      borderColor: 'rgba(255, 99, 132, 0.9)',
+                      pointBackgroundColor: 'rgba(255, 99, 132, 0.9)',
+                      pointBorderColor: 'rgba(255, 99, 132, 1)',
+                      borderWidth: 3,
+                      pointRadius: 3,
+                  }
+              ]},
+          options: {
+              title: {
+              display: true,
+              text: 'Average consumption by tariff',
+              fontSize: 24
+              },
+              scales: {                          // 軸設定
+                  xAxes: [                           // Ｘ軸設定
+                      {
+                          scaleLabel: {                 // 軸ラベル
+                              display: true,                // 表示設定
+                              labelString: 'tariff',    // ラベル
+                              fontColor: "blue",             // 文字の色
+                              fontSize: 20                  // フォントサイズ
+                          },
+                      }],
+                      yAxes: [                           // Ｘ軸設定
+                      {
+                          scaleLabel: {                 // 軸ラベル
+                              display: true,                // 表示設定
+                              labelString: 'average consumption',    // ラベル
+                              fontColor: "blue",             // 文字の色
+                              fontSize: 20                  // フォントサイズ
+                          },
+                          ticks: {
+                              min: 0
+                          },
+                      }], 
+                  }
+              }
+      });
+  </script>
+
+{% endblock %}
