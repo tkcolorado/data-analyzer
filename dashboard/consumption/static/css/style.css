@@ -1,0 +1,134 @@
+* {
+    box-sizing: border-box;
+    font-family: Gurmukhi, Arial, sans-serif;
+    margin: 0px 0px;
+  }
+  
+  .side_links {
+    padding-bottom: 20px;
+  }
+  
+  #banner {
+    font-size: 30px;
+    height: 55px;
+    padding: 20px 15px 12px 15px;
+    width: 42%;
+  }
+  
+  #side_bar {
+    background-color: #007500;
+    font-size: 24px;
+    width: 10%;
+    text-align: left;
+    display: block;
+    padding: 10px 15px;
+  }
+  
+  #welcome {
+    position: relative;
+    color: black;
+    font-size: 18px;
+    text-align: center;
+    width: 100%;
+    padding: 210px 15px;
+    min-height: 100%
+  }
+  
+  .container {
+    display: inline-flex;
+    height: calc(100vh - 65px);
+    width: 100%;
+  }
+  
+  .subcontainer {
+    position: relative;
+    width: 35%;
+  }
+  
+  #graphs {
+    position: relative;
+    width: 55%;
+  }
+  
+  .subheader {
+    position: relative;
+    border: 1px solid #808080;
+    font-size: 18px;
+    padding: 8px 5px;
+    height: 40px;
+    white-space: nowrap;
+  }
+  
+  .dataframe {
+    position: relative;
+    font-size: 17px;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  #search {
+    height: 25px;
+    padding: 12px;
+    margin-top: 10px;
+    margin-left: 45%;
+  }
+  
+  #button {
+    text-align: center;
+    font-weight: bold;
+    border-radius: 5px;
+    height: 16px;
+    margin-left: 3.5%;
+    margin-top: 2px;
+  }
+  
+  .header {
+    display: inline-flex;
+    background-color: #0098d8;
+    width: 100%;
+    height: 65px;
+    white-space: nowrap;
+  }
+  
+  .results {
+    overflow: auto;
+    height: calc(100% - 40px);
+  }
+  
+  .white{
+    color: #FFF;
+    position: relative;
+  }
+
+  .white:hover{
+    color: blue;
+  }
+  
+  form {
+    display: inline-flex;
+  }
+  
+  /* tr:nth-child(even){background-color: #f2f2f2} */
+  
+  thead {
+      background-color: #e6c700;
+      color: #FFF;
+  }
+  
+  th, td {
+      text-align: left;
+      padding: 6px;
+  }
+  
+  li {
+    display: inline
+  }
+  
+  html {
+    overflow: hidden
+  }
+
+  canvas {
+    border: solid 1px #000000; 
+    border-collapse: collapse;
+  }
