@@ -11,11 +11,11 @@ from .models import User_data, Consumption
 from django.core.paginator import Paginator
 
 SUMMARY_HTML = 'summary.html'
-LAYOUT_HTML = 'layout.html'
+HOME_HTML = 'home.html'
 DETAIL_HTML = 'details.html'
 
 def front_page(request):
-    return render(request, LAYOUT_HTML)
+    return render(request, HOME_HTML)
 
 def summary(request):
     
