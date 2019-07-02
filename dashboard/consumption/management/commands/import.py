@@ -30,7 +30,7 @@ class Command(BaseCommand):
 
         user_datas = []
 
-        with open('./data/user_data.csv', 'r') as f:
+        with open('../data/user_data.csv', 'r') as f:
             rows = csv.reader(f)
             next(rows)
             for row in rows:
@@ -52,13 +52,13 @@ class Command(BaseCommand):
 
         if Consumption.objects.exists():
             self.logger.info('consumption table data already exist,'
-                             ' drop the table import again.')
+                    ' drop the table import again.')
             Consumption.objects.all().delete()
 
         consumptions = []
 
-        for i in glob.glob('./data/consumption/*.csv'):
-            user_id = i.replace('./data/consumption/', '').replace('.csv', '')
+        for i in glob.glob('../data/consumption/*.csv'):
+            user_id = i.replace('../data/consumption/', '').replace('.csv', '')
             user_data = User_data.objects.get(pk=user_id)
             with open(i, 'r') as f:
                 rows = csv.reader(f)
@@ -76,6 +76,6 @@ class Command(BaseCommand):
                 
         self.logger.info('Consumption data imported')
         new_instances = Consumption.objects.bulk_create(consumptions)
-        new_instances     
+        new_instances
 
         f.close()
