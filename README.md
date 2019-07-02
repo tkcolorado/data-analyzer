@@ -54,5 +54,5 @@ Now, this app's performance is not good, so I want to tune performance, efficien
 [MIT](https://github.com/takahirosawamura/data-analyzer/blob/master/LICENSE)
 
 ## Author
-[tkcolorado](https://github.com/tkcolorado)
+[tkcolorado](https://github.com/takahirosawamura)
 
