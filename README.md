@@ -50,5 +50,9 @@ you can chack the db more than summary page. id, date, tariff, consumption etc.
 ## Todo
 Now, this app's performance is not good, so I want to tune performance, efficient query, code splitting etc.
 
+## Licence
+[MIT](https://github.com/takahirosawamura/data-analyzer/blob/master/LICENSE)
+
 ## Author
 [tkcolorado](https://github.com/tkcolorado)
+
